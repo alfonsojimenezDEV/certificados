@@ -1,15 +1,28 @@
 <script>
+    import {v4 as uuidv4 } from "uuid";
     import Modulo from './Modulo.svelte';
 
     //Recibe: certificado
     export let certificado;
 
-    let modulos = [];
+    let modulosArray = [];
     let nombreModulo = '';
-    $:  modulos = Object.values(certificado.modulos);
+    $:  modulosArray = Object.values(certificado.modulos);
     
     function addModulo() {
-        console.log("añadir módulo");
+        const id = uuidv4();
+        //Desempacando la propiedad modulos del objeto certificado
+        //Con esto se consigue tener una constante denominada
+        //modulos que contiene la propiedad modulos del objeto
+        //certificado
+        const {modulos} = certificado;
+        
+        modulos[id] = {
+            id,
+            name: nombreModulo
+        }
+        certificado.modulos = modulos;
+        nombreModulo = '';
         
     }
 
@@ -23,7 +36,7 @@
             <input type="text" placeholder="Nombre del módulo" bind:value={nombreModulo} /> <button>Add</button>
         </label>
     </form>
-    {#each modulos as modulo}
+    {#each modulosArray as modulo}
         <Modulo bind:modulo/>
     {/each}
 </div>
