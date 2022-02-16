@@ -16,7 +16,8 @@
         //modulos que contiene la propiedad modulos del objeto
         //certificado
         const {modulos} = certificado;
-        
+        //si quisiémos que tuviera otro nombre
+        //pondríamos const {modulos: nuevoNombre} = certificado
         modulos[id] = {
             id,
             name: nombreModulo
