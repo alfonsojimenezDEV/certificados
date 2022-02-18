@@ -1,10 +1,19 @@
 <script>
+import { blurOnKey } from "./utils";
+
+
     export let modulo;
 
+    let editar = false; //Esta variable controla si se está en el modo de edición para cambiar e nombre el módulo.
 </script>
 
 <div class="modulo">
-    <p>{modulo.name}</p>
+   {#if editar}
+        <input type="text" on:blur={ () => (editar = false)} bind:value={modulo.name} on:keydown={blurOnKey}>
+   {:else}
+        <span on:click={() => (editar = true)}>{modulo.name}</span>
+   {/if}
+    <!-- <p>{modulo.name}</p> -->
 </div>
 
 <style>

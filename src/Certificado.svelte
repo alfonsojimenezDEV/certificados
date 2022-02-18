@@ -1,5 +1,5 @@
 <script>
-    import {v4 as uuidv4 } from "uuid";
+    import {obtenerId, blurOnKey}  from "./utils";
     import Modulo from './Modulo.svelte';
 
     //Recibe: certificado
@@ -7,10 +7,14 @@
 
     let modulosArray = [];
     let nombreModulo = '';
+    
+    let editar = false; //Esta variable controlará la edición del nombre del certificado
+
     $:  modulosArray = Object.values(certificado.modulos);
+
     
     function addModulo() {
-        const id = uuidv4();
+        const id = obtenerId();
         //Desempacando la propiedad modulos del objeto certificado
         //Con esto se consigue tener una constante denominada
         //modulos que contiene la propiedad modulos del objeto
@@ -31,7 +35,13 @@
 </script>
 
 <div class="certificado">
-    <h2>{certificado.name}</h2>
+    {#if editar}
+         <input type="text" bind:value={certificado.name} on:blur={() => (editar = false)} on:keydown={blurOnKey}>
+    {:else}
+         <h2 on:click={() => (editar=true)}>{certificado.name}</h2>
+    {/if}
+
+    <!-- <h2>{certificado.name}</h2> -->
     <form action="" on:submit|preventDefault={addModulo}>
         <label for="">
             <input type="text" placeholder="Nombre del módulo" bind:value={nombreModulo} /> <button>Add</button>

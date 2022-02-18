@@ -1,5 +1,5 @@
 <script>
-    import {v4 as uuidv4 } from "uuid";
+    import {obtenerId, blurOnKey} from './utils.js'
     import Certificado from './Certificado.svelte';
 
     let certificados = {};
@@ -9,15 +9,15 @@
 
     $: certificadosArray = Object.values(certificados); //este comando pasa los objetos a un array
 
-    id= uuidv4();
+    id= obtenerId();
     certificados[id] = {id, name: 'Actividades de venta', modulos: [{id:1, name: 'MF0233: Ofimática'}, {id:2, name: 'MF0234: Redes'}]};
-    id= uuidv4();
+    id= obtenerId();
     certificados[id] = {id, name: 'Actividades comerciales', modulos: {}}    ;
 
     // console.log(certificados); 
     function addCertificado() {
-        console.log("añadir certificado");
-        const id = uuidv4();
+        // console.log("añadir certificado");
+        const id = obtenerId();
         certificados[id] = {
             id,
             name: nombreCertificado,
