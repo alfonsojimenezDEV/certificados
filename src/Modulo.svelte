@@ -1,5 +1,8 @@
 <script>
 import { blurOnKey } from "./utils";
+import {createEventDispatcher} from 'svelte';
+
+const dispatch = createEventDispatcher();
 
 
     export let modulo;
@@ -11,7 +14,7 @@ import { blurOnKey } from "./utils";
    {#if editar}
         <input type="text" on:blur={ () => (editar = false)} bind:value={modulo.name} on:keydown={blurOnKey}>
    {:else}
-        <span on:click={() => (editar = true)}>{modulo.name}</span>
+        <span on:click={() => (editar = true)}>{modulo.name}</span> <button on:click={() => dispatch('eliminarModulo')}>Eliminar</button>
    {/if}
     <!-- <p>{modulo.name}</p> -->
 </div>

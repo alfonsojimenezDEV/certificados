@@ -5,6 +5,7 @@
     let certificados = {};
     let certificadosArray = []; //Se necesita este array porque el bucle #each sólo funciona con arrays (no funciona con objetos)
     let id;
+    let id2; 
     let nombreCertificado ='';
 
     $: certificadosArray = Object.values(certificados); //este comando pasa los objetos a un array
@@ -12,7 +13,7 @@
     id= obtenerId();
     certificados[id] = {id, name: 'Actividades de venta', modulos: [{id:1, name: 'MF0233: Ofimática'}, {id:2, name: 'MF0234: Redes'}]};
     id= obtenerId();
-    certificados[id] = {id, name: 'Actividades comerciales', modulos: {}}    ;
+    certificados[id] = {id, name: 'Actividades comerciales', modulos: []};
 
     // console.log(certificados); 
     function addCertificado() {

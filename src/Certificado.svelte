@@ -1,6 +1,10 @@
 <script>
+    import {createEventDispatcher} from 'svelte';
     import {obtenerId, blurOnKey}  from "./utils";
     import Modulo from './Modulo.svelte';
+
+
+    const dispatch = createEventDispatcher();
 
     //Recibe: certificado
     export let certificado;
@@ -31,6 +35,13 @@
         
     }
 
+    function deleteModulo(modulo) {
+        console.log("eliminando módulo con id: " + modulo.id);
+        console.log(certificado.modulos[modulo.id]);
+        delete certificado.modulos[modulo.id];
+        certificado=certificado;
+    }
+
     console.log(certificado);
 </script>
 
@@ -48,7 +59,7 @@
         </label>
     </form>
     {#each modulosArray as modulo}
-        <Modulo bind:modulo/>
+        <Modulo bind:modulo on:eliminarModulo={() => deleteModulo(modulo)}/>
     {/each}
 </div>
 
