@@ -11,13 +11,20 @@
 
     let modulosArray = [];
     let nombreModulo = '';
-    
+    let message = '';
     let editar = false; //Esta variable controlará la edición del nombre del certificado
 
     $:  modulosArray = Object.values(certificado.modulos);
 
     
     function addModulo() {
+        //Primero comprobamos si el nombre del módulo ya ha sido usado antes
+        const duplicate = modulosArray.some(cat => cat.name === nombreModulo);
+        if (duplicate) {
+            message = `El módulo ${nombreModulo} ya existe en este certificado`
+            alert (message);
+            return;
+        }
         const id = obtenerId();
         //Desempacando la propiedad modulos del objeto certificado
         //Con esto se consigue tener una constante denominada
@@ -36,20 +43,21 @@
     }
 
     function deleteModulo(modulo) {
-        console.log("eliminando módulo con id: " + modulo.id);
-        console.log(certificado.modulos[modulo.id]);
+        // console.log("eliminando módulo con id: " + modulo.id);
+        // console.log(certificado.modulos[modulo.id]);
         delete certificado.modulos[modulo.id];
         certificado=certificado;
     }
 
-    console.log(certificado);
+    // console.log(certificado);
 </script>
 
 <div class="certificado">
     {#if editar}
          <input type="text" bind:value={certificado.name} on:blur={() => (editar = false)} on:keydown={blurOnKey}>
     {:else}
-         <h2 on:click={() => (editar=true)}>{certificado.name}</h2>
+         <h2 on:click={() => (editar=true)}>{certificado.name} </h2>
+         <button on:click={() => {dispatch('eliminarCertificado')}}>Eliminar</button>
     {/if}
 
     <!-- <h2>{certificado.name}</h2> -->
